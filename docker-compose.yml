@@ -3,7 +3,7 @@ services:
   strapi_server:
     image: poomport/app:1.0.0
     container_name: ced-app
-    restart: unless-stopped
+    restart: always
     ports:
       - 8080:1337 
     environment:
@@ -19,7 +19,7 @@ services:
   db:
     container_name: ced-db
     image: postgres:15-bullseye
-    restart: unless-stopped
+    restart: always
     ports:
       - 5432:5432
     env_file: .env
