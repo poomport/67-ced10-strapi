@@ -781,6 +781,272 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiDepartmentDepartment extends Schema.CollectionType {
+  collectionName: 'departments';
+  info: {
+    singularName: 'department';
+    pluralName: 'departments';
+    displayName: 'Department';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    Description: Attribute.Text;
+    Duration: Attribute.Integer;
+    Abbreviation: Attribute.String & Attribute.Required & Attribute.Unique;
+    students: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'api::student.student'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMappingMapping extends Schema.CollectionType {
+  collectionName: 'mappings';
+  info: {
+    singularName: 'mapping';
+    pluralName: 'mappings';
+    displayName: 'Mapping';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    subjects: Attribute.Relation<
+      'api::mapping.mapping',
+      'oneToMany',
+      'api::subject.subject'
+    >;
+    teacher: Attribute.Relation<
+      'api::mapping.mapping',
+      'manyToOne',
+      'api::teacher.teacher'
+    >;
+    students: Attribute.Relation<
+      'api::mapping.mapping',
+      'manyToMany',
+      'api::student.student'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::mapping.mapping',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::mapping.mapping',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSectionSection extends Schema.CollectionType {
+  collectionName: 'sections';
+  info: {
+    singularName: 'section';
+    pluralName: 'sections';
+    displayName: 'Section';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    sec: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          max: 10;
+        },
+        number
+      > &
+      Attribute.DefaultTo<0>;
+    subjects: Attribute.Relation<
+      'api::section.section',
+      'oneToMany',
+      'api::subject.subject'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::section.section',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::section.section',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiStudentStudent extends Schema.CollectionType {
+  collectionName: 'students';
+  info: {
+    singularName: 'student';
+    pluralName: 'students';
+    displayName: 'Student';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    Address: Attribute.Text & Attribute.Required;
+    mappings: Attribute.Relation<
+      'api::student.student',
+      'manyToMany',
+      'api::mapping.mapping'
+    >;
+    phone_number: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.DefaultTo<'XXX-XXX-XXXX'>;
+    student_id: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.SetMinMaxLength<{
+        maxLength: 10;
+      }> &
+      Attribute.DefaultTo<'XXXXXXXXXX'>;
+    Department: Attribute.Relation<
+      'api::student.student',
+      'manyToOne',
+      'api::department.department'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::student.student',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::student.student',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSubjectSubject extends Schema.CollectionType {
+  collectionName: 'subjects';
+  info: {
+    singularName: 'subject';
+    pluralName: 'subjects';
+    displayName: 'Subject';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required & Attribute.Unique;
+    Description: Attribute.Text;
+    unit: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<
+        {
+          max: 3;
+        },
+        number
+      >;
+    section: Attribute.Relation<
+      'api::subject.subject',
+      'manyToOne',
+      'api::section.section'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::subject.subject',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::subject.subject',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTeacherTeacher extends Schema.CollectionType {
+  collectionName: 'teachers';
+  info: {
+    singularName: 'teacher';
+    pluralName: 'teachers';
+    displayName: 'Teacher';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    mappings: Attribute.Relation<
+      'api::teacher.teacher',
+      'oneToMany',
+      'api::mapping.mapping'
+    >;
+    Email: Attribute.Email & Attribute.Required;
+    phone_number: Attribute.String &
+      Attribute.Required &
+      Attribute.Unique &
+      Attribute.DefaultTo<'XXX-XXX-XXXX'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::teacher.teacher',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::teacher.teacher',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -799,6 +1065,12 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::department.department': ApiDepartmentDepartment;
+      'api::mapping.mapping': ApiMappingMapping;
+      'api::section.section': ApiSectionSection;
+      'api::student.student': ApiStudentStudent;
+      'api::subject.subject': ApiSubjectSubject;
+      'api::teacher.teacher': ApiTeacherTeacher;
     }
   }
 }

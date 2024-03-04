@@ -1,13 +1,9 @@
 version: '3'
 services: 
   strapi_server:
-    image: poomport/app:1.0.0
+    image: poomport/app:1.1.0
     container_name: ced-app
-<<<<<<< Updated upstream
-    restart: unless-stopped
-=======
     restart: always
->>>>>>> Stashed changes
     ports:
       - 8080:1337 
     environment:

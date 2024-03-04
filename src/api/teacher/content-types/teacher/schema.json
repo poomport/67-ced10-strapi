@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "teachers",
+  "info": {
+    "singularName": "teacher",
+    "pluralName": "teachers",
+    "displayName": "Teacher",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "mappings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::mapping.mapping",
+      "mappedBy": "teacher"
+    },
+    "Email": {
+      "type": "email",
+      "required": true,
+      "unique": false
+    },
+    "phone_number": {
+      "type": "string",
+      "default": "XXX-XXX-XXXX",
+      "unique": true,
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "mappings",
+  "info": {
+    "singularName": "mapping",
+    "pluralName": "mappings",
+    "displayName": "Mapping",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "subjects": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::subject.subject"
+    },
+    "teacher": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::teacher.teacher",
+      "inversedBy": "mappings"
+    },
+    "students": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::student.student",
+      "inversedBy": "mappings"
+    }
+  }
+}
